@@ -1,0 +1,113 @@
+version: '3'
+
+services: 
+
+  wppconnect-server-9:
+    build: 
+      context: ./wppconnect-server-9
+      dockerfile: Dockerfile
+    restart: always
+    image: wppconnect-server-9
+    container_name: wppconnect-server-9
+    hostname: wppconnect-server-9
+    entrypoint: docker-entrypoint.sh yarn dev
+    ports:
+      - "8089:21479"
+    networks: 
+      - wpp-network
+    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+        reservations:
+          memory: 200M
+
+  wppconnect-server-10:
+    build:
+      context: ./wppconnect-server-10
+      dockerfile: Dockerfile
+    restart: always
+    image: wppconnect-server-10
+    container_name: wppconnect-server-10
+    hostname: wppconnect-server-10
+    entrypoint: docker-entrypoint.sh yarn dev
+    ports:
+      - "8090:21480"
+    networks:
+      - wpp-network
+    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 200M
+
+  wppconnect-server-11:
+    build:
+      context: ./wppconnect-server-11
+      dockerfile: Dockerfile
+    restart: always
+    image: wppconnect-server-11
+    container_name: wppconnect-server-11
+    hostname: wppconnect-server-11
+    entrypoint: docker-entrypoint.sh yarn dev
+    ports:
+      - "8091:21481"
+    networks:
+      - wpp-network
+    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 200M
+
+  wppconnect-server-12:
+    build:
+      context: ./wppconnect-server-12
+      dockerfile: Dockerfile
+    restart: always
+    image: wppconnect-server-12
+    container_name: wppconnect-server-12
+    hostname: wppconnect-server-12
+    entrypoint: docker-entrypoint.sh yarn dev
+    ports:
+      - "8092:21482"
+    networks:
+      - wpp-network
+    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 200M
+
+  wppconnect-server-hml:
+    build:
+      context: ./wppconnect-server-hml
+      dockerfile: Dockerfile
+    restart: always
+    image: wppconnect-server-hml
+    container_name: wppconnect-server-hml
+    hostname: wppconnect-server-hml
+    entrypoint: docker-entrypoint.sh yarn dev
+    ports:
+      - "8093:21483"
+    networks:
+      - wpp-network
+    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 200M
+
+networks: 
+  wpp-network:
+    name: wpp-network
+    driver: bridge 

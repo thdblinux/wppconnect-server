@@ -1,0 +1,92 @@
+version: '3'
+
+services: 
+
+  wppconnect-server-2:
+    build:
+      context: ./wppconnect-server-2
+      dockerfile: Dockerfile
+    restart: always
+    image: wppconnect-server-2
+    container_name: wppconnect-server-2
+    hostname: wppconnect-server-2
+    entrypoint: docker-entrypoint.sh yarn dev
+    ports:
+      - "8081:21466"
+    networks:
+      - wpp-network
+    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 200M
+
+  wppconnect-server-5:
+    build:
+      context: ./wppconnect-server-5
+      dockerfile: Dockerfile
+    restart: always
+    image: wppconnect-server-5
+    container_name: wppconnect-server-5
+    hostname: wppconnect-server-5
+    entrypoint: docker-entrypoint.sh yarn dev
+    ports:
+      - "8085:21475"
+    networks:
+      - wpp-network
+    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 200M
+
+  wppconnect-server-6:
+    build:
+      context: ./wppconnect-server-6
+      dockerfile: Dockerfile
+    restart: always
+    image: wppconnect-server-6
+    container_name: wppconnect-server-6
+    hostname: wppconnect-server-6
+    entrypoint: docker-entrypoint.sh yarn dev
+    ports:
+      - "8086:21476"
+    networks:
+      - wpp-network
+    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 200M
+
+  wppconnect-server-10:
+    build:
+      context: ./wppconnect-server-10
+      dockerfile: Dockerfile
+    restart: always
+    image: wppconnect-server-10
+    container_name: wppconnect-server-10
+    hostname: wppconnect-server-10
+    entrypoint: docker-entrypoint.sh yarn dev
+    ports:
+      - "8090:21480"
+    networks:
+      - wpp-network
+    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 200M
+
+networks: 
+  wpp-network:
+    name: wpp-network
+    driver: bridge 
