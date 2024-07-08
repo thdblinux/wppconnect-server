@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         jdk 'jdk17'
-        maven ''
+        node 'node16'
     }
 
     environment {
@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Checkout Git') {
             steps {
-                git branch: 'main', url: ''
+                git branch: 'sre-devops', url: 'https://github.com/thdevopssre/wppconnect-server.git'
             }
         }
         stage('Compile') {
