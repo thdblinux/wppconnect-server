@@ -1,7 +1,7 @@
 export default {
-  secretKey: 'Ec0nnectHML',
+  secretKey: 'process.env.SECRET_KEY_SERVER ||',
   host: 'http://localhost',
-  port: '21483',
+  port: 'process.env.PORT ||',
   deviceName: 'WppConnect',
   poweredBy: 'WPPConnect-Server',
   startAllSession: true,

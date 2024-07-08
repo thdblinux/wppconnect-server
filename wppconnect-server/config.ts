@@ -1,5 +1,5 @@
 export default {
-  secretKey: 'Ec0nnect001',
+  secretKey: 'process.env.SECRET_KEY_SERVER ||',
   host: 'http://localhost',
   port: 'process.env.PORT ||',
   deviceName: 'WppConnect',

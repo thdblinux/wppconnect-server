@@ -1,7 +1,5 @@
 FROM node:lts-alpine3.18 as builder
 
-ENV PORT=21483
-
 RUN apk add wget && \
     apk add --no-cache git python3 make g++ \
     && yarn cache clean
@@ -24,5 +22,3 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 WORKDIR /home/node-hml/app
 RUN apk add --no-cache chromium
 COPY --from=builder /home/node-hml/app/ .
-EXPOSE 21483
-
