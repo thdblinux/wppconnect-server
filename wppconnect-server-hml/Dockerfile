@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.18 as builder
+FROM node:lts-alpine3.18 AS builder
 
 RUN apk add wget && \
     apk add --no-cache git python3 make g++ \

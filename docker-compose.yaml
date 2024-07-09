@@ -10,10 +10,11 @@ services:
     container_name: wppconnect-server-1
     hostname: wppconnect-server-1
     entrypoint: docker-entrypoint.sh yarn dev
-    env_file:
-      - .env
+    environment:
+      - SECRET_KEY_SERVER=Ec0nnect001
+      - PORT=21465
     ports:
-      - "${PORT1}:${PORT1}"
+      - "8080:21465"
     networks:
       - wpp-network
     tty: true
@@ -33,10 +34,11 @@ services:
     container_name: wppconnect-server-2
     hostname: wppconnect-server-2
     entrypoint: docker-entrypoint.sh yarn dev
-    env_file:
-      - .env
+    environment:
+      - SECRET_KEY_SERVER=Ec0nnect002
+      - PORT=21466
     ports:
-      - "${PORT2}"
+      - "8081:21466"
     networks:
       - wpp-network
     tty: true
@@ -46,21 +48,21 @@ services:
           memory: 500M
         reservations:
           memory: 200M
+
   wppconnect-server-3:
     build:
       context: ./wppconnect-server
       dockerfile: Dockerfile
-      args:
-        SECRET_KEY: ${SECRET_KEY_SERVER_3}
     restart: always
     image: wppconnect-server-3
     container_name: wppconnect-server-3
     hostname: wppconnect-server-3
     entrypoint: docker-entrypoint.sh yarn dev
-    env_file:
-      - .env
+    environment:
+      - SECRET_KEY_SERVER=Ec0nnect003
+      - PORT=21467
     ports:
-      - "${PORT3}"
+      - "8082:21467"
     networks:
       - wpp-network
     tty: true
@@ -80,10 +82,11 @@ services:
     container_name: wppconnect-server-4
     hostname: wppconnect-server-4
     entrypoint: docker-entrypoint.sh yarn dev
-    env_file:
-      - .env
+    environment:
+      - SECRET_KEY_SERVER=Ec0nnect004
+      - PORT=21470
     ports:
-      - "${PORT4}"
+      - "8083:21470"
     networks:
       - wpp-network
     tty: true
@@ -103,10 +106,11 @@ services:
     container_name: wppconnect-server-5
     hostname: wppconnect-server-5
     entrypoint: docker-entrypoint.sh yarn dev
-    env_file:
-      - .env
+    environment:
+      - SECRET_KEY_SERVER=Ec0nnect005
+      - PORT=21475
     ports:
-      - "${PORT5}"
+      - "8085:21475"
     networks:
       - wpp-network
     tty: true
@@ -126,10 +130,11 @@ services:
     container_name: wppconnect-server-6
     hostname: wppconnect-server-6
     entrypoint: docker-entrypoint.sh yarn dev
-    env_file:
-      - .env
+    environment:
+      - SECRET_KEY_SERVER=Ec0nnect006
+      - PORT=21476
     ports:
-      - "${PORT6}"
+      - "8086:21476"
     networks:
       - wpp-network
     tty: true
@@ -149,10 +154,11 @@ services:
     container_name: wppconnect-server-7
     hostname: wppconnect-server-7
     entrypoint: docker-entrypoint.sh yarn dev
-    env_file:
-      - .env
+    environment:
+      - SECRET_KEY_SERVER=Ec0nnect007
+      - PORT=21477
     ports:
-      - "${PORT7}"
+      - "8087:21477"
     networks:
       - wpp-network
     tty: true
@@ -172,10 +178,11 @@ services:
     container_name: wppconnect-server-8
     hostname: wppconnect-server-8
     entrypoint: docker-entrypoint.sh yarn dev
-    env_file:
-      - .env
+    environment:
+      - SECRET_KEY_SERVER=Ec0nnect008
+      - PORT=21478
     ports:
-      - "${PORT8}"
+      - "8088:21478"
     networks:
       - wpp-network
     tty: true
@@ -195,10 +202,11 @@ services:
     container_name: wppconnect-server-9
     hostname: wppconnect-server-9
     entrypoint: docker-entrypoint.sh yarn dev
-    env_file:
-      - .env
+    environment:
+      - SECRET_KEY_SERVER=Ec0nnect009
+      - PORT=21479
     ports:
-      - "${PORT9}"
+      - "8089:21479"
     networks:
       - wpp-network
     tty: true
@@ -218,10 +226,11 @@ services:
     container_name: wppconnect-server-10
     hostname: wppconnect-server-10
     entrypoint: docker-entrypoint.sh yarn dev
-    env_file:
-      - .env
+    environment:
+      - SECRET_KEY_SERVER=Ec0nnect010
+      - PORT=21480
     ports:
-      - "${PORT10}"
+      - "8090:21480"
     networks:
       - wpp-network
     tty: true
@@ -241,10 +250,11 @@ services:
     container_name: wppconnect-server-11
     hostname: wppconnect-server-11
     entrypoint: docker-entrypoint.sh yarn dev
-    env_file:
-      - .env
+    environment:
+      - SECRET_KEY_SERVER=Ec0nnect011
+      - PORT=21481
     ports:
-      - "${PORT11}"
+      - "8091:21481"
     networks:
       - wpp-network
     tty: true
@@ -264,10 +274,11 @@ services:
     container_name: wppconnect-server-12
     hostname: wppconnect-server-12
     entrypoint: docker-entrypoint.sh yarn dev
-    env_file:
-      - .env
+    environment:
+      - SECRET_KEY_SERVER=Ec0nnect012
+      - PORT=21482
     ports:
-      - "${PORT12}"
+      - "8092:21482"
     networks:
       - wpp-network
     tty: true
@@ -287,10 +298,11 @@ services:
     container_name: wppconnect-server-hml
     hostname: wppconnect-server-hml
     entrypoint: docker-entrypoint.sh yarn dev
-    env_file:
-      - .env
+    environment:
+      - SECRET_KEY_SERVER=Ec0nnecHML
+      - PORT=21483
     ports:
-      - "${PORT_HML}"
+      - "8093:21483"
     networks:
       - wpp-network
     tty: true
