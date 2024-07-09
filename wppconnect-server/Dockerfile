@@ -12,7 +12,7 @@ RUN git clone https://github.com/wppconnect-team/wppconnect-server.git /home/nod
 
 WORKDIR /home/node/app
 
-COPY ./config.ts /home/node-01/app/src
+COPY ./config.ts /home/node/app/src
 
 RUN npm install --unsafe-perm
 
