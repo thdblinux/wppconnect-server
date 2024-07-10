@@ -10,7 +10,11 @@ pipeline {
                 script {
                     def remote = [:]
                     remote.name = 'thadeu'
+<<<<<<< HEAD
                     remote.host = '<coloque_o_endereço_ip_ou_hostname_aqui>'
+=======
+                    remote.host = ''
+>>>>>>> 160869b (feat: modificado o jenkinsfile)
                     remote.allowAnyHosts = true
                     remote.user = env.THLINUX_CREDS_USR
                     remote.password = env.THLINUX_CREDS_PSW
@@ -20,6 +24,7 @@ pipeline {
             }
         }
     }
+
     post {
         always {
             sleep 5

@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# Lista de contêineres
 containers="
 wppconnect-server-1
 wppconnect-server-2
@@ -17,7 +16,6 @@ wppconnect-server-12
 wppconnect-server-hml
 "
 
-# Loop através da lista de contêineres para verificar o status e iniciar se estiver parado
 for container in $containers; do
     status=$(docker inspect --format '{{.State.Status}}' "$container" 2>/dev/null)
 
