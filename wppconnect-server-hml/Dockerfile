@@ -6,6 +6,8 @@ RUN apk add wget && \
 
 RUN apk add vips-dev fftw-dev build-base
 
+RUN yarn config set strict-ssl false
+
 RUN yarn add sharp --ignore-engines
 
 WORKDIR /home/node-hml
