@@ -16,7 +16,7 @@ pipeline {
                     remote.user = env.THLINUX_CREDS_USR
                     remote.password = env.THLINUX_CREDS_PSW
 
-                    sshCommand remote: remote, command: 'cd /home/thadeu/Documents/Projects/wppconnect-server && ./restart_all_api.sh'
+                    sshCommand remote: remote, command: 'cd /home/thadeu/wppconnect-server && ./restart_all_api.sh'
                 }
             }
         }
