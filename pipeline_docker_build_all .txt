@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+
+    environment {
+        THLINUX_CREDS = credentials('thlinux')
+    }
+
+    stages {
+        stage('Remote SSH to Server and Deploy to Containers') {
+            steps {
+                script {
+                    def remote = [:]
+                    remote.name = 'thlinux'
+                    remote.host = '192.168.111.131'
+                    remote.allowAnyHosts = true
+                    remote.user = env.THLINUX_CREDS_USR
+                    remote.password = env.THLINUX_CREDS_PSW
+
+                    sshCommand remote: remote, command: '''
+                        #!/bin/sh
+
+                        # Função para construir e iniciar um contêiner
+                        build_and_start_container() {
+                            container=$1
+                            echo "Building and starting container: $container"
+                            docker compose up -d --build "$container"
+                            if [ $? -eq 0 ]; then
+                                echo "Container $container built and started successfully."
+                            else
+                                echo "Failed to build and start container $container."
+                            fi
+                        }
+
+                        # Limpar o cache do Docker
+                        docker builder prune -a -f
+
+                        # Gerar a lista de contêineres dinamicamente
+                        containers=$(docker ps -a --format '{{.Names}}')
+
+                        # Iterar sobre a lista de contêineres e construir cada um
+                        for container in $containers; do
+                            build_and_start_container "$container"
+                        done
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sleep 5
+        }
+    }
+}
