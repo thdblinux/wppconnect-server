@@ -1,0 +1,29 @@
+version: '3'
+
+services: 
+
+  wppconnect-server-10:
+    build:
+      context: ./wppconnect-server-10
+      dockerfile: Dockerfile
+    restart: always
+    image: wppconnect-server-10
+    container_name: wppconnect-server-10
+    hostname: wppconnect-server-10
+    entrypoint: docker-entrypoint.sh yarn dev
+    ports:
+      - "8090:21480"
+    networks:
+      - wpp-network
+    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 200M
+
+networks: 
+  wpp-network:
+    name: wpp-network
+    driver: bridge 
