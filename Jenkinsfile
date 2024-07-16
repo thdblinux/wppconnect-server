@@ -29,8 +29,8 @@ pipeline {
             steps {
                 script {
                     def remote = [:]
-                    remote.name = 'admdistri'
-                    remote.host = '10.2.230.188'
+                    remote.name = ''
+                    remote.host = ''
                     remote.allowAnyHosts = true
                     remote.user = env.THLINUX_CREDS_USR
                     remote.password = env.THLINUX_CREDS_PSW
