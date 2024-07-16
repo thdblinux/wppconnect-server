@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/bin/sh
 
 # Função para construir e iniciar um contêiner
@@ -31,3 +32,12 @@ for container in $containers; do
         echo "Container $container not found."
     fi
 done
+=======
+#!/bin/bash
+
+docker stop $1
+docker rmi -f $1
+docker system prune
+
+docker-compose up --build -d
+>>>>>>> main
