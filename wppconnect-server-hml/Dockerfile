@@ -1,26 +1,33 @@
-FROM node:lts-alpine3.18 AS builder
+# Use a imagem node:lts-alpine3.20 como estágio de construção
+FROM node:lts-alpine3.20 AS builder
 
-RUN apk add wget && \
-    apk add --no-cache git python3 make g++ \
-    && yarn cache clean
+# Instalação de pacotes necessários
+RUN apk add --no-cache wget git python3 make g++ vips-dev fftw-dev build-base && \
+    yarn cache clean && \
+    yarn config set strict-ssl false && \
+    yarn add sharp --ignore-engines
 
-RUN apk add vips-dev fftw-dev build-base
-
-RUN yarn config set strict-ssl false
-
-RUN yarn add sharp --ignore-engines
-
-WORKDIR /home/node-hml
-RUN git clone https://github.com/wppconnect-team/wppconnect-server.git /home/node-hml/app 
-
+# Configuração do diretório de trabalho e clone do repositório da aplicação
 WORKDIR /home/node-hml/app
+RUN git clone https://github.com/wppconnect-team/wppconnect-server.git .
 
-COPY ./config.ts /home/node-hml/app/src
+# Copia o arquivo de configuração
+COPY ./config.ts ./src
 
+# Instalação das dependências npm com permissões inseguras
 RUN npm install --unsafe-perm
 
-FROM node:lts-alpine3.18
+# Início de um novo estágio usando node:lts-alpine3.20 como base
+FROM node:lts-alpine3.20
+
+# Define a variável de ambiente para pular o download do Chromium para o Puppeteer
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+
+# Define o diretório de trabalho
 WORKDIR /home/node-hml/app
+
+# Instalação do Chromium
 RUN apk add --no-cache chromium
+
+# Copia a aplicação construída do estágio 'builder'
 COPY --from=builder /home/node-hml/app/ .
