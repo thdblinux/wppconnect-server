@@ -10,7 +10,7 @@ RUN apk add --no-cache wget git python3 make g++ vips-dev fftw-dev build-base &&
 # Configuração do diretório de trabalho e clone do repositório da aplicação
 WORKDIR /home/node-hml/app
 ARG GIT_USER=thadeu_guimaraes
-ARG GIT_TOKEN=glpat-SezUsDLECABtaNwjCH3R
+ARG GIT_TOKEN=g
 RUN git clone https://${GIT_USER}:${GIT_TOKEN}@gitlab.com/marciothadeu1984/econnect.git .
 
 # Copia o arquivo de configuração
