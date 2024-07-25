@@ -1,293 +1,28 @@
-version: '3'
+version: '3.8'
 
 services:
-  wppconnect-server-1:
-    build:
-      context: ./wppconnect-server
-      dockerfile: Dockerfile
-    restart: always
-    image: wppconnect-server-1
-    container_name: wppconnect-server-1
-    hostname: wppconnect-server-1
-    entrypoint: docker-entrypoint.sh yarn dev
+  postgres:
+    image: postgres
+    container_name: postgres
     environment:
-      - SECRET_KEY_SERVER=Ec0nnect001
-      - PORT=21465
-    ports:
-      - "8080:21465"
+      POSTGRES_DB: dbpostsql
+      POSTGRES_USER: wppconnect
+      POSTGRES_PASSWORD: wppsconnect
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - wpp-network
-    tty: true
-    deploy:
-      resources:
-        limits:
-          memory: 500M
-        reservations:
-          memory: 200M
 
-  wppconnect-server-2:
-    build:
-      context: ./wppconnect-server
-      dockerfile: Dockerfile
-    restart: always
-    image: wppconnect-server-2
-    container_name: wppconnect-server-2
-    hostname: wppconnect-server-2
-    entrypoint: docker-entrypoint.sh yarn dev
+  redis:
+    image: redis
+    container_name: redis
+    command: ["redis-server", "--requirepass", "wpprconnect"]
     environment:
-      - SECRET_KEY_SERVER=Ec0nnect002
-      - PORT=21466
-    ports:
-      - "8081:21466"
+      REDIS_PASSWORD: wpprconnect
+    volumes:
+      - redis_data:/data
     networks:
       - wpp-network
-    tty: true
-    deploy:
-      resources:
-        limits:
-          memory: 500M
-        reservations:
-          memory: 200M
-
-  wppconnect-server-3:
-    build:
-      context: ./wppconnect-server
-      dockerfile: Dockerfile
-    restart: always
-    image: wppconnect-server-3
-    container_name: wppconnect-server-3
-    hostname: wppconnect-server-3
-    entrypoint: docker-entrypoint.sh yarn dev
-    environment:
-      - SECRET_KEY_SERVER=Ec0nnect003
-      - PORT=21467
-    ports:
-      - "8082:21467"
-    networks:
-      - wpp-network
-    tty: true
-    deploy:
-      resources:
-        limits:
-          memory: 500M
-        reservations:
-          memory: 200M
-
-  wppconnect-server-4:
-    build:
-      context: ./wppconnect-server
-      dockerfile: Dockerfile
-    restart: always
-    image: wppconnect-server-4
-    container_name: wppconnect-server-4
-    hostname: wppconnect-server-4
-    entrypoint: docker-entrypoint.sh yarn dev
-    environment:
-      - SECRET_KEY_SERVER=Ec0nnect004
-      - PORT=21470
-    ports:
-      - "8083:21470"
-    networks:
-      - wpp-network
-    tty: true
-    deploy:
-      resources:
-        limits:
-          memory: 500M
-        reservations:
-          memory: 200M
-
-  wppconnect-server-5:
-    build:
-      context: ./wppconnect-server
-      dockerfile: Dockerfile
-    restart: always
-    image: wppconnect-server-5
-    container_name: wppconnect-server-5
-    hostname: wppconnect-server-5
-    entrypoint: docker-entrypoint.sh yarn dev
-    environment:
-      - SECRET_KEY_SERVER=Ec0nnect005
-      - PORT=21475
-    ports:
-      - "8085:21475"
-    networks:
-      - wpp-network
-    tty: true
-    deploy:
-      resources:
-        limits:
-          memory: 500M
-        reservations:
-          memory: 200M
-
-  wppconnect-server-6:
-    build:
-      context: ./wppconnect-server
-      dockerfile: Dockerfile
-    restart: always
-    image: wppconnect-server-6
-    container_name: wppconnect-server-6
-    hostname: wppconnect-server-6
-    entrypoint: docker-entrypoint.sh yarn dev
-    environment:
-      - SECRET_KEY_SERVER=Ec0nnect006
-      - PORT=21476
-    ports:
-      - "8086:21476"
-    networks:
-      - wpp-network
-    tty: true
-    deploy:
-      resources:
-        limits:
-          memory: 500M
-        reservations:
-          memory: 200M
-
-  wppconnect-server-7:
-    build:
-      context: ./wppconnect-server
-      dockerfile: Dockerfile
-    restart: always
-    image: wppconnect-server-7
-    container_name: wppconnect-server-7
-    hostname: wppconnect-server-7
-    entrypoint: docker-entrypoint.sh yarn dev
-    environment:
-      - SECRET_KEY_SERVER=Ec0nnect007
-      - PORT=21477
-    ports:
-      - "8087:21477"
-    networks:
-      - wpp-network
-    tty: true
-    deploy:
-      resources:
-        limits:
-          memory: 500M
-        reservations:
-          memory: 200M
-
-  wppconnect-server-8:
-    build:
-      context: ./wppconnect-server
-      dockerfile: Dockerfile
-    restart: always
-    image: wppconnect-server-8
-    container_name: wppconnect-server-8
-    hostname: wppconnect-server-8
-    entrypoint: docker-entrypoint.sh yarn dev
-    environment:
-      - SECRET_KEY_SERVER=Ec0nnect008
-      - PORT=21478
-    ports:
-      - "8088:21478"
-    networks:
-      - wpp-network
-    tty: true
-    deploy:
-      resources:
-        limits:
-          memory: 500M
-        reservations:
-          memory: 200M
-
-  wppconnect-server-9:
-    build:
-      context: ./wppconnect-server
-      dockerfile: Dockerfile
-    restart: always
-    image: wppconnect-server-9
-    container_name: wppconnect-server-9
-    hostname: wppconnect-server-9
-    entrypoint: docker-entrypoint.sh yarn dev
-    environment:
-      - SECRET_KEY_SERVER=Ec0nnect009
-      - PORT=21479
-    ports:
-      - "8089:21479"
-    networks:
-      - wpp-network
-    tty: true
-    deploy:
-      resources:
-        limits:
-          memory: 500M
-        reservations:
-          memory: 200M
-
-  wppconnect-server-10:
-    build:
-      context: ./wppconnect-server
-      dockerfile: Dockerfile
-    restart: always
-    image: wppconnect-server-10
-    container_name: wppconnect-server-10
-    hostname: wppconnect-server-10
-    entrypoint: docker-entrypoint.sh yarn dev
-    environment:
-      - SECRET_KEY_SERVER=Ec0nnect010
-      - PORT=21480
-    ports:
-      - "8090:21480"
-    networks:
-      - wpp-network
-    tty: true
-    deploy:
-      resources:
-        limits:
-          memory: 500M
-        reservations:
-          memory: 200M
-
-  wppconnect-server-11:
-    build:
-      context: ./wppconnect-server
-      dockerfile: Dockerfile
-    restart: always
-    image: wppconnect-server-11
-    container_name: wppconnect-server-11
-    hostname: wppconnect-server-11
-    entrypoint: docker-entrypoint.sh yarn dev
-    environment:
-      - SECRET_KEY_SERVER=Ec0nnect011
-      - PORT=21481
-    ports:
-      - "8091:21481"
-    networks:
-      - wpp-network
-    tty: true
-    deploy:
-      resources:
-        limits:
-          memory: 500M
-        reservations:
-          memory: 200M
-
-  wppconnect-server-12:
-    build:
-      context: ./wppconnect-server
-      dockerfile: Dockerfile
-    restart: always
-    image: wppconnect-server-12
-    container_name: wppconnect-server-12
-    hostname: wppconnect-server-12
-    entrypoint: docker-entrypoint.sh yarn dev
-    environment:
-      - SECRET_KEY_SERVER=Ec0nnect012
-      - PORT=21482
-    ports:
-      - "8092:21482"
-    networks:
-      - wpp-network
-    tty: true
-    deploy:
-      resources:
-        limits:
-          memory: 500M
-        reservations:
-          memory: 200M
 
   wppconnect-server-hml:
     build:
@@ -301,10 +36,22 @@ services:
     environment:
       - SECRET_KEY_SERVER=Ec0nnectHML
       - PORT=21483
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=dbpostsql
+      - POSTGRES_USER=wppconnect
+      - POSTGRES_PASSWORD=wppsconnect
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=wpprconnect
     ports:
       - "8093:21483"
     networks:
       - wpp-network
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - .:/app
     tty: true
     deploy:
       resources:
@@ -317,3 +64,7 @@ networks:
   wpp-network:
     name: wpp-network
     driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:

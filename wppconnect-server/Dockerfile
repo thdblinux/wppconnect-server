@@ -7,11 +7,17 @@ RUN apk add --no-cache wget git python3 make g++ vips-dev fftw-dev build-base &&
     yarn config set strict-ssl false && \
     yarn add sharp --ignore-engines
 
-# Configuração do diretório de trabalho e clone do repositório da aplicação
-WORKDIR /home/node-hml/app
-ARG GIT_USER=thadeu_guimaraes
-ARG GIT_TOKEN=g
-RUN git clone https://${GIT_USER}:${GIT_TOKEN}@gitlab.com/marciothadeu1984/econnect.git .
+# Define o diretório de trabalho
+WORKDIR /home/node/app
+
+# Remove qualquer conteúdo existente
+RUN rm -rf /home/node/app/*
+
+# Adicione o token de acesso pessoal como um build ARG
+ARG GIT_TOKEN
+
+# Clone o repositório com o token
+RUN git clone https://$GIT_TOKEN@gitlab.com/marciothadeu1984/econnect.git .
 
 # Copia o arquivo de configuração
 COPY ./config.ts ./src
@@ -26,10 +32,10 @@ FROM node:lts-alpine3.20
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 # Define o diretório de trabalho
-WORKDIR /home/node-hml/app
+WORKDIR /home/node/app
 
 # Instalação do Chromium
 RUN apk add --no-cache chromium
 
 # Copia a aplicação construída do estágio 'builder'
-COPY --from=builder /home/node-hml/app/ .
+COPY --from=builder /home/node/app/ .
