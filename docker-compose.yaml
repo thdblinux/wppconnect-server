@@ -1,16 +1,18 @@
 version: '3.8'
 
 services:
-  postgres:
-    image: postgres
+  mongo:
+    image: mongo
     restart: on-failure:3
-    container_name: postgres
+    container_name: mongodb
     environment:
-      POSTGRES_DB: dbpostsql
-      POSTGRES_USER: wppconnect
-      POSTGRES_PASSWORD: wppsconnect
+      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
     networks:
       - wpp-network
 
@@ -18,9 +20,9 @@ services:
     image: redis
     restart: on-failure:3
     container_name: redis
-    command: ["redis-server", "--requirepass", "wpprconnect"]
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
     environment:
-      REDIS_PASSWORD: wpprconnect
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
     volumes:
       - redis_data:/data
     networks:
@@ -36,24 +38,25 @@ services:
     hostname: wppconnect-server-hml
     entrypoint: docker-entrypoint.sh yarn dev
     environment:
-      - SECRET_KEY_SERVER=Ec0nnectHML
-      - PORT=21483
-      - POSTGRES_HOST=postgres
-      - POSTGRES_DB=dbpostsql
-      - POSTGRES_USER=wppconnect
-      - POSTGRES_PASSWORD=wppsconnect
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - REDIS_PASSWORD=wpprconnect
+      - SECRET_KEY_SERVER=${SECRET_KEY_SERVER}
+      - PORT=${PORT}
+      - MONGODB_HOST=${MONGODB_HOST}
+      - MONGODB_DATABASE=${MONGODB_DATABASE}
+      - MONGODB_USER=${MONGODB_USER}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
     ports:
       - "8093:21483"
     networks:
       - wpp-network
     depends_on:
-      - postgres
+      - mongo
       - redis
     volumes:
       - .:/app
+      - ./userDataDir:/home/node/app/userDataDir
     tty: true
     deploy:
       resources:
@@ -68,5 +71,5 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data:
+  mongo_data:
   redis_data:

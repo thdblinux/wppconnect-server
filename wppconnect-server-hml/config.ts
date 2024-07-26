@@ -1,17 +1,16 @@
 export default {
-  secretKey: 'process.env.SECRET_KEY_SERVER ||',
+  secretKey: process.env.SECRET_KEY_SERVER || '',
   host: 'http://localhost',
-  port: 'process.env.PORT ||',
+  port: process.env.PORT || '',
   deviceName: 'WppConnect',
   poweredBy: 'WPPConnect-Server',
   startAllSession: true,
-  tokenStoreType: 'file',
+  tokenStoreType: 'mongodb', // Altere de 'file' para 'mongodb'
   maxListeners: 15,
   customUserDataDir: './userDataDir/',
   webhook: {
     url: null,
     autoDownload: true,
-    uploadS3: false,
     readMessage: true,
     allUnreadOnStart: false,
     listenAcks: true,
@@ -33,7 +32,7 @@ export default {
     daysToArchive: 45,
   },
   log: {
-    level: 'silly', // Before open a issue, change level to silly and retry a action
+    level: 'silly', // Before opening an issue, change the level to silly and retry an action
     logger: ['console', 'file'],
   },
   createOptions: {
@@ -66,21 +65,18 @@ export default {
     prefix: 'tagone-',
   },
   db: {
-    postgresDatabase: 'dbpostsql',
-    postgresUser: 'wppconnect',
-    postgresPassword: 'wppsconnect',
-    postgresHost: 'postgres',
-    postgresPort: 5432,
-    redisHost: 'redis',
-    redisPort: 6379,
-    redisPassword: 'wpprconnect',
+    mongodbDatabase: 'tokens',
+    mongodbCollection: '',
+    mongodbUser: process.env.MONGODB_USER || '',
+    mongodbPassword: process.env.MONGODB_PASSWORD || '',
+    mongodbHost: process.env.MONGODB_HOST || '',
+    mongoIsRemote: false,
+    mongoURLRemote: '',
+    mongodbPort: 27017,
+    redisHost: process.env.REDIS_HOST || 'localhost',
+    redisPort: process.env.REDIS_PORT || 6379,
+    redisPassword: process.env.REDIS_PASSWORD || '',
     redisDb: 0,
     redisPrefix: 'docker',
   },
-  // aws_s3: {
-  //   region: 'sa-east-1',
-  //   access_key_id: null,
-  //   secret_key: null,
-  //   defaultBucketName: null,
-  // },
 };
