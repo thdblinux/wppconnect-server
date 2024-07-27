@@ -1,20 +1,20 @@
 version: '3.8'
 
 services:
-  mongo:
-    image: mongo
-    restart: on-failure:3
-    container_name: mongodb
-    environment:
-      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
-      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
-    volumes:
-      - mongo_data:/data/db
-    ports:
-      - "27017:27017"
-    networks:
-      - wpp-network
+  # mongo:
+  #   image: mongo
+  #   restart: on-failure:3
+  #   container_name: mongodb
+  #   environment:
+  #     MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
+  #     MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+  #     MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+  #   volumes:
+  #     - mongo_data:/data/db
+  #   ports:
+  #     - "27017:27017"
+  #   networks:
+  #     - wpp-network
 
   redis:
     image: redis
@@ -40,10 +40,10 @@ services:
     environment:
       - SECRET_KEY_SERVER=${SECRET_KEY_SERVER}
       - PORT=${PORT}
-      - MONGODB_HOST=${MONGODB_HOST}
-      - MONGODB_DATABASE=${MONGODB_DATABASE}
-      - MONGODB_USER=${MONGODB_USER}
-      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      # - MONGODB_HOST=${MONGODB_HOST}
+      # - MONGODB_DATABASE=${MONGODB_DATABASE}
+      # - MONGODB_USER=${MONGODB_USER}
+      # - MONGODB_PASSWORD=${MONGODB_PASSWORD}
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PORT=${REDIS_PORT}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
@@ -52,7 +52,7 @@ services:
     networks:
       - wpp-network
     depends_on:
-      - mongo
+      # - mongo
       - redis
     volumes:
       - .:/app
