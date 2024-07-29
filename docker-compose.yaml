@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3"
 
 services:
   mongo:
@@ -8,7 +8,7 @@ services:
     networks:
       - wpp-network
     healthcheck:
-      test: echo 'db.stats().ok' | mongo localhost:27017/test --quiet
+      test: ["CMD-SHELL", "echo 'db.stats().ok' | mongo localhost:27017/test --quiet"]
       interval: 10s
       timeout: 10s
       retries: 5
@@ -21,7 +21,7 @@ services:
       - "27017:27017"
     command: mongod
     volumes:
-      - ./logs/mongo:/data/db
+      - ./data/mongo:/data/db
 
   redis:
     image: redis
@@ -36,10 +36,9 @@ services:
       - wpp-network
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   wppconnect-server-hml:
     build:
@@ -49,7 +48,7 @@ services:
     image: wppconnect-server-hml
     container_name: wppconnect-server-hml
     hostname: wppconnect-server-hml
-    entrypoint: docker-entrypoint.sh yarn dev
+    entrypoint: ["docker-entrypoint.sh", "yarn", "dev"]
     environment:
       - SECRET_KEY_SERVER=${SECRET_KEY_SERVER}
       - PORT=${PORT}
@@ -74,71 +73,27 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256M
+          memory: 500M
         reservations:
-          memory: 256M
+          memory: 500M
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8093/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+      test: ["CMD", "curl", "-f", "http://localhost:21483/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
-  wppconnect-server:
+  wppconnect-server-hml2:
     build:
-      context: ./wppconnect-server
+      context: ./wppconnect-server-hml2
       dockerfile: Dockerfile
     restart: always
-    image: wppconnect-server-1
-    container_name: wppconnect-server-1
-    hostname: wppconnect-server-1
-    entrypoint: docker-entrypoint.sh yarn dev
+    image: wppconnect-server-hml2
+    container_name: wppconnect-server-hml2
+    hostname: wppconnect-server-hml2
+    entrypoint: ["docker-entrypoint.sh", "yarn", "dev"]
     environment:
-      - SECRET_KEY_SERVER=${SECRET_KEY_SERVER_1}
-      - PORT=${PORT_1}
-      - MONGODB_HOST=mongo
-      - MONGODB_DATABASE=${MONGODB_DATABASE}
-      - MONGODB_USER=${MONGODB_USER}
-      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
-    ports:
-      - "8094:21484"
-    networks:
-      - wpp-network
-    depends_on:
-      - mongo
-      - redis
-    volumes:
-      - .:/app
-      - ./userDataDir:/home/node/app/userDataDir
-    tty: true
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-        reservations:
-          memory: 256M
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8094/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
-
-  wppconnect-server-2:
-    build:
-      context: ./wppconnect-server
-      dockerfile: Dockerfile
-    restart: always
-    image: wppconnect-server-2
-    container_name: wppconnect-server-2
-    hostname: wppconnect-server-2
-    entrypoint: docker-entrypoint.sh yarn dev
-    environment:
-      - SECRET_KEY_SERVER=${SECRET_KEY_SERVER_2}
-      - PORT=${PORT_2}
+      - SECRET_KEY_SERVER=${SECRET_KEY_SERVER_HML2}
+      - PORT=${PORT_HML2}
       - MONGODB_HOST=mongo
       - MONGODB_DATABASE=${MONGODB_DATABASE}
       - MONGODB_USER=${MONGODB_USER}
@@ -154,9 +109,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256M
+          memory: 500M
         reservations:
-          memory: 256M
+          memory: 500M
     depends_on:
       - mongo
       - redis
@@ -164,54 +119,10 @@ services:
       - .:/app
       - ./userDataDir:/home/node/app/userDataDir
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
-
-  wppconnect-server-3:
-    build:
-      context: ./wppconnect-server
-      dockerfile: Dockerfile
-    restart: always
-    image: wppconnect-server-3
-    container_name: wppconnect-server-3
-    hostname: wppconnect-server-3
-    entrypoint: docker-entrypoint.sh yarn dev
-    environment:
-      - SECRET_KEY_SERVER=${SECRET_KEY_SERVER_3}
-      - PORT=${PORT_3}
-      - MONGODB_HOST=mongo
-      - MONGODB_DATABASE=${MONGODB_DATABASE}
-      - MONGODB_USER=${MONGODB_USER}
-      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
-    ports:
-      - "8082:21467"
-    networks:
-      - wpp-network
-    tty: true
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-        reservations:
-          memory: 256M
-    depends_on:
-      - mongo
-      - redis
-    volumes:
-      - .:/app
-      - ./userDataDir:/home/node/app/userDataDir
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+      test: ["CMD", "curl", "-f", "http://localhost:21466/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 networks:
   wpp-network:
