@@ -1,5 +1,5 @@
 export default {
-  secretKey: process.env.SECRET_KEY_SERVER || '',
+  secretKey: process.env.SECRET_KEY_SERVER_HML2 || '',
   host: 'http://localhost',
   port: process.env.PORT || '',
   deviceName: 'WppConnect',
