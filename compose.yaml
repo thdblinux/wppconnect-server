@@ -2,7 +2,6 @@ services:
   mongo:
     image: mongo:4.2.24-bionic
     restart: always
-    container_name: mongo
     networks:
       - wpp-network
     healthcheck:
@@ -23,7 +22,6 @@ services:
   redis:
     image: redis
     restart: always
-    container_name: redis
     command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
     environment:
       REDIS_PASSWORD: ${REDIS_PASSWORD}
@@ -43,7 +41,6 @@ services:
       dockerfile: Dockerfile
     restart: always
     image: wppconnect-server-hml
-    container_name: wppconnect-server-hml
     hostname: wppconnect-server-hml
     entrypoint: ["docker-entrypoint.sh", "yarn", "dev"]
     environment:
@@ -85,7 +82,6 @@ services:
       dockerfile: Dockerfile
     restart: always
     image: wppconnect-server-hml2
-    container_name: wppconnect-server-hml2
     hostname: wppconnect-server-hml2
     entrypoint: ["docker-entrypoint.sh", "yarn", "dev"]
     environment:
